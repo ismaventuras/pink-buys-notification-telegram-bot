@@ -5,8 +5,6 @@ import { generateTelegramMessage, telegramSendMessage } from './telegram';
 import { getCurrencyUsdPrice, getPinkOnBaseUsdPrice } from './usd-price';
 import { BeamswapLog } from './types';
 
-
-
 async function buyOnStella(logs: any[]) {
     try {
         // console.log("Stellaswap events block", logs[0].blockNumber)
@@ -18,7 +16,7 @@ async function buyOnStella(logs: any[]) {
                 const xcDOT_in = formatUnits(log.args.amount0!, xcDecimals)
                 const xcPINK_out = formatUnits(log.args.amount1!, xcDecimals).split('-')[1]
                 // const message = `🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n *Pink Buy at Stellaswap*\n🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n\nBought \`${xcPINK_out}\` of PINK for \`${xcDOT_in} xcDOT\`\n${explorerLink}\n usdprice:\`${lastPrice?.stellaswap}\`$`;
-                const msg = generateTelegramMessage(String(lastPrice?.stellaswap), xcPINK_out, 'stellaswap')
+                const msg = generateTelegramMessage(String(lastPrice?.stellaswap), xcPINK_out, 'stellaswap', xcDOT_in, 'xcDOT')
                 await telegramSendMessage(msg, "https://i.imgur.com/vX8kkGQ.jpeg")
             }
         }
@@ -38,7 +36,7 @@ async function buyOnBeamswap(logs: BeamswapLog[]) {
                 const xcDOT_in = formatUnits(amount0In, xcDecimals);
                 const xcPINK_out = formatUnits(amount1Out, xcDecimals);
                 // const message = `🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n *Pink Buy at Beamswap*\n🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n\nBought \`${xcPINK_out}\` of PINK for \`${xcDOT_in} xcDOT\`\n${explorerLink}\nusdprice:\`${lastPrice?.beamswap}\`$`;
-                const msg = generateTelegramMessage(String(lastPrice?.beamswap), xcPINK_out, 'beamswap')
+                const msg = generateTelegramMessage(String(lastPrice?.beamswap), xcPINK_out, 'beamswap', xcDOT_in, 'xcDOT')
                 await telegramSendMessage(msg, "https://i.imgur.com/vX8kkGQ.jpeg")
             }
         }
@@ -57,7 +55,7 @@ async function buyOnBase(logs: any) {
                 const WETH_in = formatUnits(log.args.amount0!, 18)
                 const xcPINK_out = formatUnits(log.args.amount1!, xcDecimals).split('-')[1]
                 // const message = `🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n *Pink Buy at Uniswap on Base*\n🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀\n\nBought \`${xcPINK_out}\` of PINK for \`${WETH_in} WETH\`\n${explorerLink}`;
-                const msg = generateTelegramMessage(lastPrice.uniswap, xcPINK_out, 'uniswap')
+                const msg = generateTelegramMessage(lastPrice.uniswap, xcPINK_out, 'uniswap',WETH_in, 'WETH')
                 await telegramSendMessage(msg, "https://i.imgur.com/vX8kkGQ.jpeg")
             }
         }
