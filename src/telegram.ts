@@ -21,9 +21,9 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
 🏦 Market Cap: \`${mcap}\`
 
 🛒 BUY
-[Beamswap](https://app.beamswap.io/exchange/braindex)
-[Stellaswap](https://app.stellaswap.com/exchange/swap)
-[Uniswap \\(Base\\)](https://app.uniswap.org/swap?chain=base)
+[Beamswap](https://app.beamswap.io/exchange/swap?outputCurrency=0xfFfFFfFf30478fAFBE935e466da114E14fB3563d)
+[Stellaswap](https://app.stellaswap.com/exchange/swap?outputCurrency=0xfFfFFfFf30478fAFBE935e466da114E14fB3563d)
+[Uniswap \\(Base\\)](https://app.uniswap.org/swap?outputCurrency=0x66fc31b3233c7C001bdD21Ff6E5E66fA08EF85D0&chain=base)
 
 📊 CHARTS
 [Beamswap](https://dexscreener.com/moonbeam/0x6ccb9c69b6a519cf38f72e111ab7bbcf457f9502)
