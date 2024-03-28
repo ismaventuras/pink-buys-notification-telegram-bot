@@ -13,24 +13,24 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
     const mcap = formatNumber(supply * Number(lastPrice))
     const usdAmount = Number(lastPrice) * Number(xcPINK_out)
     const msg2 = `
-🎀 NEW PINK BUY\\!
+🎀 *NEW PINK BUY*\\!
 
-💵 Spent: \`${inputToken_in} ${inputTokenSymbol} \\(${usdAmount.toFixed(2)} $\`\\)
-💰 Received: \`${xcPINK_out}\` $PINK  🎀
-📈 $PINK Price: \`${lastPrice}\`
-🏦 Market Cap: \`${mcap}\`
+💵 *Spent:* \`${inputToken_in} ${inputTokenSymbol} \\(${usdAmount.toFixed(2)} $\`\\)
+💰 *Received:* \`${xcPINK_out}\` $PINK  🎀
+📈 *$PINK Price:* \`${lastPrice}\`
+🏦 *Market Cap:* \`${mcap}\`
 
-🛒 BUY
+🛒 *BUY*
 [Beamswap](https://app.beamswap.io/exchange/swap?outputCurrency=0xfFfFFfFf30478fAFBE935e466da114E14fB3563d)
 [Stellaswap](https://app.stellaswap.com/exchange/swap?outputCurrency=0xfFfFFfFf30478fAFBE935e466da114E14fB3563d)
 [Uniswap \\(Base\\)](https://app.uniswap.org/swap?outputCurrency=0x66fc31b3233c7C001bdD21Ff6E5E66fA08EF85D0&chain=base)
 
-📊 CHARTS
+📊 *CHARTS*
 [Beamswap](https://dexscreener.com/moonbeam/0x6ccb9c69b6a519cf38f72e111ab7bbcf457f9502)
 [Stellaswap](https://dexscreener.com/moonbeam/0x4ff48b9613a34c6e8eb508731a0bcc50a15ee944)
 [Uniswap \\(Base\\)](https://dexscreener.com/base/0xa19ef740b9e1882e52070f3e28cf01102ce017c0)
 
-Life is better with $PINK 🚀🚀🚀`
+*Life is better with $PINK* 🚀🚀🚀`
     const msg = `
     🚀 NEW $PINK BUY on ${dex}🚀
 
