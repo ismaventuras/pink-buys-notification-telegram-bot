@@ -18,7 +18,7 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
 💵 *Spent:* \`${formatWithConditionalDecimals(inputToken_in)} ${inputTokenSymbol} \\(${formatWithConditionalDecimals(usdAmount)} $\`\\)
 💰 *Received:* \`${formatWithConditionalDecimals(xcPINK_out)}\` $PINK  🎀
 📈 *$PINK Price:* \`${lastPrice}\`
-🏦 *Market Cap:* \`${mcap}\`
+🏦 *Market Cap\\(FDV\\):* \`${mcap}\`
 
 🛒 *BUY*
 [Beamswap](https://app.beamswap.io/exchange/swap?outputCurrency=0xfFfFFfFf30478fAFBE935e466da114E14fB3563d)
