@@ -1,5 +1,5 @@
 import { TELEGRAM_BOT_TOKEN_ID, TELEGRAM_CHANNEL_CHATID } from "./constants";
-import { formatNumber } from "./utils";
+import { formatNumber, formatWithConditionalDecimals } from "./utils";
 
 const TELEGRAM_API = 'https://api.telegram.org/bot';
 
@@ -13,10 +13,10 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
     const mcap = formatNumber(supply * Number(lastPrice))
     const usdAmount = Number(lastPrice) * Number(xcPINK_out)
     const msg2 = `
-🎀 *NEW PINK BUY*\\!
+🎀 *NEW PINK BUY on ${dex}*\\!
 
-💵 *Spent:* \`${inputToken_in} ${inputTokenSymbol} \\(${usdAmount.toFixed(2)} $\`\\)
-💰 *Received:* \`${xcPINK_out}\` $PINK  🎀
+💵 *Spent:* \`${formatWithConditionalDecimals(inputToken_in)} ${inputTokenSymbol} \\(${formatWithConditionalDecimals(usdAmount)} $\`\\)
+💰 *Received:* \`${formatWithConditionalDecimals(xcPINK_out)}\` $PINK  🎀
 📈 *$PINK Price:* \`${lastPrice}\`
 🏦 *Market Cap:* \`${mcap}\`
 
