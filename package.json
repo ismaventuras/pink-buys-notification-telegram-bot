@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "dotenv -e .env -- node dist/index.js",
-    "build": "tsc --build --force",
-    "dev": "dotenv -e .env -- tsx src/index.ts",
-    "production": "dotenv -e .env -- pm2 start ecosystem.config.js"
+    "start": "node -r dotenv/config dist/index.js",
+    "build": "tsc --build",
+    "dev": "tsx -r dotenv/config src/index.ts",
+    "production": "pm2 start ecosystem.config.js"
   },
   "author": "Ismael Bautista",
   "license": "MIT",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
+    "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.1",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"

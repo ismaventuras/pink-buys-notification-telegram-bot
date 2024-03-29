@@ -1,21 +1,39 @@
 import { parseAbiItem } from "viem"
 
-if (!process.env.TELEGRAM_CHANNEL_CHATID) {
-    console.log("Missing TELEGRAM_CHANNEL_CHATID env variable")
-    process.exit(1)
+const requiredEnvVars: string[] = [
+    'TELEGRAM_CHANNEL_CHATID',
+    'TELEGRAM_BOT_TOKEN_ID',
+    'MOONBEAM_RPC_URL',
+    'BASE_RPC_URL'
+];
+
+function checkRequiredEnvVariables(requiredVars:string[]) {
+    const missingVars = requiredVars.filter(varName => !process.env[varName]);
+
+    if (missingVars.length > 0) {
+        console.log('Missing required environment variables:', missingVars.join(', '));
+        process.exit(1);
+    }
 }
-if (!process.env.TELEGRAM_BOT_TOKEN_ID) {
-    console.log("Missing TELEGRAM_BOT_TOKEN_ID env variable")
-    process.exit(1)
-}
-if (!process.env.MOONBEAM_RPC_URL) {
-    console.log("Missing MOONBEAM_RPC_URL env variable")
-    process.exit(1)
-}
-if (!process.env.BASE_RPC_URL) {
-    console.log("Missing BASE_RPC_URL env variable")
-    process.exit(1)
-}
+
+checkRequiredEnvVariables(requiredEnvVars)
+
+// if (!process.env.TELEGRAM_CHANNEL_CHATID) {
+//     console.log("Missing TELEGRAM_CHANNEL_CHATID env variable")
+//     process.exit(1)
+// }
+// if (!process.env.TELEGRAM_BOT_TOKEN_ID) {
+//     console.log("Missing TELEGRAM_BOT_TOKEN_ID env variable")
+//     process.exit(1)
+// }
+// if (!process.env.MOONBEAM_RPC_URL) {
+//     console.log("Missing MOONBEAM_RPC_URL env variable")
+//     process.exit(1)
+// }
+// if (!process.env.BASE_RPC_URL) {
+//     console.log("Missing BASE_RPC_URL env variable")
+//     process.exit(1)
+// }
 
 export const RPC_URL = {
     moonbeam: process.env.MOONBEAM_RPC_URL,
