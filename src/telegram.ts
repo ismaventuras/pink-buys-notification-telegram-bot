@@ -1,12 +1,5 @@
-import { TELEGRAM_BOT_TOKEN_ID, TELEGRAM_CHANNEL_CHATID } from "./constants";
+import { TELEGRAM_API, TELEGRAM_BOT_TOKEN_ID, TELEGRAM_CHANNEL_CHATID } from "./constants";
 import { formatNumber, formatWithConditionalDecimals } from "./utils";
-
-const TELEGRAM_API = 'https://api.telegram.org/bot';
-
-
-function escapeMarkdownV2(text:string) {
-    return text.replace(/[_*[\]()~`>#+-=|{}.!\\]/g, "\\$&");
-}
 
 export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:string, dex:string,inputToken_in:string,inputTokenSymbol:string){
     const supply = 2300001221

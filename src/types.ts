@@ -19,3 +19,28 @@ export type BeamswapLog = {
     transactionLogIndex?: `0x${string}`,
     removed: boolean
 }
+
+export type VALID_NETWORKS = 'moonbeam' | 'base'
+export type VALID_PLATFORMS = 'beamswap' | 'stellaswap' | 'uniswapBase'
+
+export interface PlatformConfig {
+    network: VALID_NETWORKS;
+    decimalsIn: number;
+    platformName: string;
+    tokenInName: string;
+    explorerUrl: string;
+    priceKey: VALID_PLATFORMS;
+}
+
+export type DexScrennerResponse = {
+    pairs:{
+        chainId:string;
+        dexId:string;
+        priceUsd:string;
+        quoteToken:{
+            address:`0x${string}`;
+            name:string;
+            symbol:string;
+        }
+    }[]
+}

@@ -1,60 +1,27 @@
 import { PINK_ADDRESS } from "./constants";
+import type { DexScrennerResponse, VALID_NETWORKS } from "./types";
 
-type DexScrennerResponse = {
-    pairs:{
-        chainId:string;
-        dexId:string;
-        priceUsd:string;
-        quoteToken:{
-            address:`0x${string}`;
-            name:string;
-            symbol:string;
-        }
-    }[]
-}
-
-export async function getPinkOnBaseUsdPrice() {
-    const prices = {
-        uniswap:""
-    }
-    try {
-        const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${PINK_ADDRESS.base}`);
-        if (response.status === 200) {
-            const data:DexScrennerResponse = await response.json()
-
-            data.pairs.filter(pair=> pair.quoteToken.symbol === 'WETH').forEach(pair => {
-                prices[pair.dexId as keyof typeof prices] = pair.priceUsd;
-            })
-
-            return prices
-        } else {
-            throw new Error("Failed to fetch token price.");
-        }
-    } catch (error) {
-        console.error("Error fetching token price:", error);
-        return prices;
-    }
-}
-
-export async function getCurrencyUsdPrice(addy:`0x${string}`) {
+export async function getAllPinkPrice(network:VALID_NETWORKS){
     const prices = {
         beamswap:"",
-        stellaswap:""
+        stellaswap:"",
+        uniswapBase:""
     }
     try {
-        const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addy}`);
+        const address = PINK_ADDRESS[network]
+        const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
         if (response.status === 200) {
             const data:DexScrennerResponse = await response.json()
-            data.pairs.filter(pair=> pair.quoteToken.symbol === 'xcDOT').forEach(pair => {
-                prices[pair.dexId as keyof typeof prices] = pair.priceUsd;
+            const validPairs = data.pairs.filter(pair=> pair.quoteToken.symbol === 'WETH' || pair.quoteToken.symbol === 'xcDOT')
+            validPairs.forEach(pair => {
+                if(pair.chainId === 'base') prices.uniswapBase = pair.priceUsd;
+                else prices[pair.dexId as keyof typeof prices] = pair.priceUsd;
             })
-
             return prices
         } else {
             throw new Error("Failed to fetch token price.");
         }
     } catch (error) {
-        console.error("Error fetching token price:", error);
-        return prices;
+        return prices
     }
 }

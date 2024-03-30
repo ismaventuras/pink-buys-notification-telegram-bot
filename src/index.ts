@@ -25,9 +25,10 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠈⠻⢦⡀⠀⣰⠏⠀⠀⢀⡴⠃⢀⡄⠙⣆⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⢷⡄⠀⠀⠀⠀⠉⠙⠯⠀⠀⡴⠋⠀⢠⠟⠀⠀⢹⡄
 */
-import { listenSwapEvent } from './listen-events-logic';
+import './env'
+import { listen } from './listen-events-logic';
 
-listenSwapEvent().catch(e => {
+listen().catch(e => {
     console.error(e)
     process.exit(1)
 })
