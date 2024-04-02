@@ -1,6 +1,12 @@
 import { TELEGRAM_API, TELEGRAM_BOT_TOKEN_ID, TELEGRAM_CHANNEL_CHATID } from "./constants";
 import { formatNumber, formatWithConditionalDecimals } from "./utils";
 
+const CHAT_ID_LIST = [
+    "-1002045263393", // Pink Buys Notifications channel
+    "-1002090041159", // Pink Community
+]
+
+
 export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:string, dex:string,inputToken_in:string,inputTokenSymbol:string){
     const supply = 2300001221
     const mcap = formatNumber(supply * Number(lastPrice))

@@ -13,6 +13,7 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
                 for(let log of logs){
                     if(log.args.amount0In > 0){
                         const xcDOT_in = formatUnits(log.args.amount0In, platform.decimalsIn);
+                        if(Number(xcDOT_in) < 10) continue 
                         const xcPINK_out = formatUnits(log.args.amount1Out, xcDecimals);
                         const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
                         await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
@@ -24,6 +25,9 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
                 for(let log of logs){
                     if(log.args.amount0In > 0){
                         const xcDOT_in = formatUnits(log.args.amount0, platform.decimalsIn)
+                        if(platform.tokenInName === 'xcDOT' && Number(xcDOT_in) < 10)continue
+                        if(platform.tokenInName === 'WETH' && Number(xcDOT_in) < 0.05)continue
+                        
                         const xcPINK_out = formatUnits(log.args.amount1, xcDecimals).split('-')[1]
                         const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
                         await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
