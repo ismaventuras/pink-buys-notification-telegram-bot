@@ -95,6 +95,29 @@ export async function telegramSendMessage(text: string, imageUrl:string) {
     }
 }
 
+async function sendTestMessage(){
+    const method = 'sendMessage';
+    const url = `${TELEGRAM_API}${TELEGRAM_BOT_TOKEN_ID}/${method}`;
+    let body = {
+        chat_id: TELEGRAM_CHANNEL_CHATID,
+        parse_mode: 'MarkdownV2',
+        disable_web_page_preview: true,
+        text:""
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json();
+        console.log(data)
+        // console.dir(data,{depth:null});
+    } catch (error) {
+        console.error('Failed to send message', error);
+    }
+}
 // function to know to the chatid of the bot or of what group it have been added
 async function telegramGetUpdates() {
     const url = `${TELEGRAM_API}${TELEGRAM_BOT_TOKEN_ID}/getUpdates`;
@@ -112,5 +135,6 @@ async function telegramGetUpdates() {
     }
 }
 
-//telegramGetUpdates().then(console.log).catch(console.error)
+// sendTestMessage().then(console.log).catch(console.error)
+// telegramGetUpdates().then(console.log).catch(console.error)
 // telegramSendMessage(generateTelegramMessage('0.005134','893.92', 'beamswap', '0.5', 'xcDOT' ), "https://i.imgur.com/vX8kkGQ.jpeg").then(console.log).catch(console.error)

@@ -29,6 +29,7 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
                         await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
                     }
                 }
+                break;
             default:
                 break;
         }
