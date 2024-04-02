@@ -6,36 +6,43 @@ import { getAllPinkPrice } from './usd-price';
 import { PlatformConfig, VALID_PLATFORMS } from './types';
 
 async function processSwapEvents(logs:any[],platform:PlatformConfig){
-    const lastPrice = await getAllPinkPrice(platform.network);
     try {
-        switch (platform.priceKey) {
-            case 'beamswap':
-                for(let log of logs){
-                    if(log.args.amount0In > 0){
-                        const xcDOT_in = formatUnits(log.args.amount0In, platform.decimalsIn);
-                        if(Number(xcDOT_in) < 10) continue 
-                        const xcPINK_out = formatUnits(log.args.amount1Out, xcDecimals);
-                        const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
-                        await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
-                    }
+        if(platform.priceKey === 'beamswap'){
+            const lastPrice = await getAllPinkPrice(platform.network);
+            for(let log of logs){
+                if(log.args.amount0In > 0){
+                    const xcDOT_in = formatUnits(log.args.amount0In, platform.decimalsIn);
+                    if(Number(xcDOT_in) < 10) continue 
+                    const xcPINK_out = formatUnits(log.args.amount1Out, xcDecimals);
+                    const msg = generateTelegramMessage(lastPrice[platform.priceKey], xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
+                    await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
                 }
-                break;
-            case 'stellaswap':
-            case 'uniswapBase':
-                for(let log of logs){
-                    if(log.args.amount0In > 0){
-                        const xcDOT_in = formatUnits(log.args.amount0, platform.decimalsIn)
-                        if(platform.tokenInName === 'xcDOT' && Number(xcDOT_in) < 10)continue
-                        if(platform.tokenInName === 'WETH' && Number(xcDOT_in) < 0.05)continue
-                        
-                        const xcPINK_out = formatUnits(log.args.amount1, xcDecimals).split('-')[1]
-                        const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
-                        await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
-                    }
+            }
+        }
+        else if(platform.priceKey === 'stellaswap'){
+            const lastPrice = await getAllPinkPrice(platform.network);
+            for(let log of logs){
+                if(log.args.amount0In > 0){
+                    const xcDOT_in = formatUnits(log.args.amount0, platform.decimalsIn)
+                    if( Number(xcDOT_in) < 10)continue
+                    
+                    const xcPINK_out = formatUnits(log.args.amount1, xcDecimals).split('-')[1]
+                    const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
+                    await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
                 }
-                break;
-            default:
-                break;
+            }
+        }
+        else if(platform.priceKey === 'uniswapBase'){
+            const lastPrice = await getAllPinkPrice(platform.network);
+            for(let log of logs){
+                if(log.args.amount0In > 0){
+                    const WETH_in = formatUnits(log.args.amount0, platform.decimalsIn)
+                    if(Number(WETH_in) < 0.05)continue
+                    const xcPINK_out = formatUnits(log.args.amount1, xcDecimals).split('-')[1]
+                    const msg = generateTelegramMessage(String(lastPrice[platform.priceKey]), xcPINK_out, platform.platformName, WETH_in, platform.tokenInName)
+                    await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
+                }
+            }
         }
     } catch (error) {
         console.error(error);
