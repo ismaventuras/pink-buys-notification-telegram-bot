@@ -50,13 +50,32 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
 }
 
 export async function listen(){
-    for(const [key,config] of Object.entries(platformDetail)){
-        console.log(`Starting to listen for events at ${config.platformName}`);
-        const unwatch = (key === 'base' ? baseClient : moonbeamClient).watchEvent({
-            address: LP_ADDRESS[key as VALID_PLATFORMS],
-            event: key === 'base' ? UNI_V3_PINK_LP_SWAP_EVENT : BEAMSWAP_PINK_LP_SWAP_EVENT,
-            onLogs: logs => processSwapEvents(logs, config),
-            onError: error => console.error(error)
-        });
-    }
+    moonbeamClient.watchEvent({
+        address: LP_ADDRESS['beamswap'],
+        event: BEAMSWAP_PINK_LP_SWAP_EVENT,
+        onLogs: logs => processSwapEvents(logs, platformDetail.beamswap),
+        onError: error => console.error(error)
+    });
+    moonbeamClient.watchEvent({
+        address: LP_ADDRESS['stellaswap'],
+        event: UNI_V3_PINK_LP_SWAP_EVENT,
+        onLogs: logs => processSwapEvents(logs, platformDetail.stellaswap),
+        onError: error => console.error(error)
+    });
+    baseClient.watchEvent({
+        address: LP_ADDRESS['uniswapBase'],
+        event: UNI_V3_PINK_LP_SWAP_EVENT,
+        onLogs: logs => processSwapEvents(logs, platformDetail.uniswapBase),
+        onError: error => console.error(error)
+    });
+
+    // for(const [key,config] of Object.entries(platformDetail)){
+    //     console.log(`Starting to listen for events at ${config.platformName}`);
+    //     const unwatch = (key === 'base' ? baseClient : moonbeamClient).watchEvent({
+    //         address: LP_ADDRESS[key as VALID_PLATFORMS],
+    //         event: key === 'base' ? UNI_V3_PINK_LP_SWAP_EVENT : BEAMSWAP_PINK_LP_SWAP_EVENT,
+    //         onLogs: logs => processSwapEvents(logs, config),
+    //         onError: error => console.error(error)
+    //     });
+    // }
 }
