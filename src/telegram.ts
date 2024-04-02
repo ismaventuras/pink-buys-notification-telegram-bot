@@ -101,14 +101,14 @@ export async function telegramSendMessage(text: string, imageUrl:string) {
     }
 }
 
-async function sendTestMessage(){
+async function sendTestMessage(text:string){
     const method = 'sendMessage';
     const url = `${TELEGRAM_API}${TELEGRAM_BOT_TOKEN_ID}/${method}`;
     let body = {
         chat_id: TELEGRAM_CHANNEL_CHATID,
         parse_mode: 'MarkdownV2',
         disable_web_page_preview: true,
-        text:""
+        text
     };
 
     try {

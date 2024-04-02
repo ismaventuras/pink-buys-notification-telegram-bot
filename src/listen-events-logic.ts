@@ -14,7 +14,7 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
                     const xcDOT_in = formatUnits(log.args.amount0In, platform.decimalsIn);
                     if(Number(xcDOT_in) < 10) continue 
                     const xcPINK_out = formatUnits(log.args.amount1Out, xcDecimals);
-                    const msg = generateTelegramMessage(lastPrice[platform.priceKey], xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
+                    const msg = generateTelegramMessage(lastPrice['stellaswap'], xcPINK_out, platform.platformName, xcDOT_in, platform.tokenInName)
                     await telegramSendMessage(msg, TELEGRAM_MESSAGE_IMAGE)
                 }
             }
