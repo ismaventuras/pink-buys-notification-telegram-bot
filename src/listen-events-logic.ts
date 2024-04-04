@@ -22,7 +22,7 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
         else if(platform.priceKey === 'stellaswap'){
             const lastPrice = await getAllPinkPrice(platform.network);
             for(let log of logs){
-                if(log.args.amount0In > 0){
+                if(log.args.amount0 > 0){
                     const xcDOT_in = formatUnits(log.args.amount0, platform.decimalsIn)
                     if( Number(xcDOT_in) < 10)continue
                     
@@ -35,7 +35,7 @@ async function processSwapEvents(logs:any[],platform:PlatformConfig){
         else if(platform.priceKey === 'uniswapBase'){
             const lastPrice = await getAllPinkPrice(platform.network);
             for(let log of logs){
-                if(log.args.amount0In > 0){
+                if(log.args.amount0 > 0){
                     const WETH_in = formatUnits(log.args.amount0, platform.decimalsIn)
                     if(Number(WETH_in) < 0.05)continue
                     const xcPINK_out = formatUnits(log.args.amount1, xcDecimals).split('-')[1]
