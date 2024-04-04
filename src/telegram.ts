@@ -75,16 +75,16 @@ Lets G\\(r\\)OOOOO\\(w\\) 🚀🚀🚀`
 }
 
 export async function telegramSendMessage(text: string, imageUrl:string) {
-    // const method = imageUrl ? 'sendPhoto': 'sendMessage';
-    const method = 'sendPhoto';
+    // const method = 'sendPhoto';
+    const method = 'sendMessage';
     const url = `${TELEGRAM_API}${TELEGRAM_BOT_TOKEN_ID}/${method}`;
     let body = {
         chat_id: TELEGRAM_CHANNEL_CHATID,
-        // text: text,
+        text: text,
         parse_mode: 'MarkdownV2',
         disable_web_page_preview: true,
-        photo:imageUrl,
-        caption:text
+        // photo:imageUrl,
+        // caption:text
     };
 
     try {
