@@ -6,6 +6,7 @@ const CHAT_ID_LIST = [
     "-1002090041159", // Pink Community
 ]
 
+const pattern = /4\s*\.?\s*2\s*\.?\s*0\s*\.?\s*6\s*\.?\s*9/;
 
 export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:string, dex:string,inputToken_in:string,inputTokenSymbol:string){
     const supply = 2300001221
@@ -13,6 +14,12 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
     const usdAmount = Number(lastPrice) * Number(xcPINK_out)
     const msg2 = `
 🎀 *NEW PINK BUY on ${dex}*\\!
+
+${pattern.test(xcPINK_out) ? `
+🎀🎀🎀🎀🎀 *PINK ALERT* 🎀🎀🎀🎀🎀
+A degen bought an amount containing the number 42069\\. Please reply with THANKS DEGEN or a whale will dump
+🎀🎀🎀🎀🎀 *END OF PINK ALERT* 🎀🎀🎀🎀🎀
+` : ""}
 
 💵 *Spent:* \`${formatWithConditionalDecimals(inputToken_in)} ${inputTokenSymbol} \\(${formatWithConditionalDecimals(usdAmount)} $\`\\)
 💰 *Received:* \`${formatWithConditionalDecimals(xcPINK_out)}\` $PINK  🎀
@@ -30,51 +37,10 @@ export function generateTelegramMessage(lastPrice:string|number, xcPINK_out:stri
 [Uniswap \\(Base\\)](https://dexscreener.com/base/0xa19ef740b9e1882e52070f3e28cf01102ce017c0)
 
 *Life is better with $PINK* 🚀🚀🚀`
-    const msg = `
-    🚀 NEW $PINK BUY on ${dex}🚀
-
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀
-🎀🎀🎀🎀🎀🎀
-
-Congratulations, you just PINKed yourself 🤜🤛
-
-Spent: \`${usdAmount.toFixed(2)}\` shitcoin$ 💸
-Received: \`${Number(xcPINK_out).toFixed(2)}\` shiney new $PINK on Polkadot 🎀
-$PINK playing at \`${lastPrice}$\` 🥁
-
-[BUY PINK on beamswap](https://app.beamswap.io/exchange/braindex)
-
-[BUY PINK on stellaswap](https://app.stellaswap.com/exchange/swap)
-
-[BUY PINK on uniswap](https://app.uniswap.org/swap?chain=base)
-
-[Beamswap Chart](https://dexscreener.com/moonbeam/0x6ccb9c69b6a519cf38f72e111ab7bbcf457f9502)
-
-[Stellaswap Chart](https://dexscreener.com/moonbeam/0x4ff48b9613a34c6e8eb508731a0bcc50a15ee944)
-
-[Uniswap\\(base\\) Chart](https://dexscreener.com/base/0xa19ef740b9e1882e52070f3e28cf01102ce017c0)
-
-
-Lets G\\(r\\)OOOOO\\(w\\) 🚀🚀🚀`
     return msg2
 }
 
-export async function telegramSendMessage(text: string, imageUrl:string) {
+export async function telegramSendMessage(text: string) {
     // const method = 'sendPhoto';
     const method = 'sendMessage';
     const url = `${TELEGRAM_API}${TELEGRAM_BOT_TOKEN_ID}/${method}`;
@@ -94,7 +60,7 @@ export async function telegramSendMessage(text: string, imageUrl:string) {
             body: JSON.stringify(body)
         });
         const data = await response.json();
-        // console.log(data)
+        console.log(data)
         // console.dir(data,{depth:null});
     } catch (error) {
         console.error('Failed to send message', error);
@@ -143,4 +109,4 @@ async function telegramGetUpdates() {
 
 // sendTestMessage().then(console.log).catch(console.error)
 // telegramGetUpdates().then(console.log).catch(console.error)
-// telegramSendMessage(generateTelegramMessage('0.005134','893.92', 'beamswap', '0.5', 'xcDOT' ), "https://i.imgur.com/vX8kkGQ.jpeg").then(console.log).catch(console.error)
+// telegramSendMessage(generateTelegramMessage('0.005134','42069', 'beamswap', '0.5', 'xcDOT' )).then(console.log).catch(console.error)
