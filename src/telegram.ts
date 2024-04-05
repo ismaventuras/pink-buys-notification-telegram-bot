@@ -60,7 +60,7 @@ export async function telegramSendMessage(text: string) {
             body: JSON.stringify(body)
         });
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         // console.dir(data,{depth:null});
     } catch (error) {
         console.error('Failed to send message', error);
